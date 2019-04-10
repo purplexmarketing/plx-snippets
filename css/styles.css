@@ -1,0 +1,88 @@
+div[class*='plx-'] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.plx-row {
+	margin-left: -15px;
+	margin-right: -15px;
+	width: 100%;
+}
+
+.plx-col-1, .plx-col-2, .plx-col-3, .plx-col-4, .plx-col-5, .plx-col-6, .plx-col-7, .plx-col-8, .plx-col-9, .plx-col-10, .plx-col-11, .plx-col-12 {
+	float: left;
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-bottom:10px;
+}
+
+.plx-col-1 {
+	width: 8.33333333%;
+}
+.plx-col-2 {
+	width: 16.66666667%;
+}
+.plx-col-3 {
+	width: 25%;
+}
+.plx-col-4 {
+	width: 33.33333333%;
+}
+.plx-col-5 {
+	width: 41.66666667%;
+}
+.plx-col-6 {
+	width: 50%;
+}
+.plx-col-7 {
+	width: 58.33333333%;
+}
+.plx-col-8 {
+	width: 66.66666667%;
+}
+.plx-col-9 {
+	width: 75%;
+}
+.plx-col-10 {
+	width: 83.33333333%;
+}
+.plx-col-11 {
+	width: 91.66666667%;
+}
+.plx-col-12 {
+	width: 100%;
+}
+
+.plx-text-center {
+	text-align: center;
+}
+
+.plx-crossfade {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+.plx-crossfade img {
+	vertical-align: top;
+}
+
+.plx-crossfade img.plx-top {
+  position: relative;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.plx-crossfade img.plx-bottom {
+  position: absolute;
+  left: 0;
+}
+
+.plx-crossfade img.plx-top:hover {
+  opacity:0;
+}
