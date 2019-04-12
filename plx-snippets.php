@@ -2,7 +2,7 @@
 /**
 * Plugin Name: PLX Snippets
 * Description: Easily add snippets of text in the PHP code within your theme using Wordpress Custom Fields
-* Version: 1.0
+* Version: 2.0
 * Author: Purplex Marketing
 * Author URI: http://www.plx.mk/
 * License: GPLv2 or later
@@ -31,7 +31,7 @@ function plx_register_cpt_snippet() {
     'not_found' 						=> _x( 'No snippets found', 'plx_snippet' ),
     'not_found_in_trash' 		=> _x( 'No snippets found in Bin', 'plx_snippet' ),
     'parent_item_colon' 		=> _x( 'Parent Snippet:', 'plx_snippet' ),
-    'menu_name'							=> _x( 'PLX Snippets', 'plx_snippet' ),
+    'menu_name'							=> _x( 'Snippets', 'plx_snippet' ),
     'name_admin_bar'				=> _x( 'Snippet', 'plx_snippet' ),
     'all_items' 						=> _x( 'All Snippets', 'plx_snippet'),
   );
@@ -40,7 +40,7 @@ function plx_register_cpt_snippet() {
     'labels' 								=> $labels,
     'hierarchical' 					=> true,
     'description' 					=> 'Snippets filterable by snippet group',
-    'supports' 							=> array( 'title' ),
+    'supports' 							=> array( 'title', 'editor' ),
     'taxonomies' 						=> array( 'plx-sn-groups' ),
     'public' 								=> true,
     'show_ui' 							=> true,
@@ -98,14 +98,14 @@ function plx_snippet_shortcode() {
 
 	if (get_post_status( $post->ID ) == 'auto-draft') {
 
-		$html = '<p class="description">Shortcodes will appear once snippet has been saved</p>';
+		$html = '<p class="description">Shortcode will appear once snippet has been saved</p>';
 		echo $html;
 
 	} else {
 
 		$html = '';
 
-		$plx_shortcode_snippet = '[plxsnippet id=' . $post->ID . ']';
+		$plx_shortcode_snippet = '[plx-snippet slug="' . $post->post_name . '"]';
 
 		$html .= '<div class="plx-row">';
 		$html .= '<div class="plx-col-6">';
@@ -125,27 +125,29 @@ function plx_add_snippet_metaboxes() {
 
 	global $post;
 
-	add_meta_box('plx_snippet_shortcode', 'Shortcodes', 'plx_snippet_shortcode', 'plx_snippet', 'normal', 'low');
+	add_meta_box('plx_snippet_shortcode', 'Shortcode', 'plx_snippet_shortcode', 'plx_snippet', 'normal', 'low');
 
-}
-
-function plx_snippet_display($post) {
-	echo get_the_title( $post->ID );
 }
 
 function plx_get_snippet( $atts, $content = null ) {
 	$a = shortcode_atts( array(
-		'id'				=> ''
+		'slug'				=> ''
 	), $atts );
 
-	$snippet_id = esc_attr($atts['id']);
+	$snippet_slug = esc_attr($atts['slug']);
 
-	$post = get_post($snippet_id);
-	$snippet_post .= plx_snippet_display($post, 'r');
+	$get_post_by_slug = get_posts(
+		array(
+			'name' => $snippet_slug,
+			'post_type' => 'plx_snippet',
+			'post_status' => 'publish',
+			'posts_per_page' => 1
+		)
+	);
+	return get_post_field( 'post_content', $get_post_by_slug[0]->ID );
 
-	return $snippet_post;
 }
-add_shortcode('plxsnippet', 'plx_get_snippet');
+add_shortcode('plx-snippet', 'plx_get_snippet');
 
 function plx_snippet_hide_menu_items() {
 	remove_menu_page( 'edit.php?post_type=plx_snippet' );

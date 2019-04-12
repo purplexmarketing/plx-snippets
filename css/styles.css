@@ -86,3 +86,7 @@ div[class*='plx-'] {
 .plx-crossfade img.plx-top:hover {
   opacity:0;
 }
+
+.post-type-plx_snippet #edit-slug-box {
+  display: none !important;
+}
