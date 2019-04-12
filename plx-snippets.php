@@ -2,7 +2,7 @@
 /**
 * Plugin Name: PLX Snippets
 * Description: Easily add snippets of text in the PHP code within your theme using Wordpress Custom Fields
-* Version: 2.0
+* Version: 2.1
 * Author: Purplex Marketing
 * Author URI: http://www.plx.mk/
 * License: GPLv2 or later
@@ -144,7 +144,7 @@ function plx_get_snippet( $atts, $content = null ) {
 			'posts_per_page' => 1
 		)
 	);
-	return get_post_field( 'post_content', $get_post_by_slug[0]->ID );
+	return do_shortcode(get_post_field( 'post_content', $get_post_by_slug[0]->ID ));
 
 }
 add_shortcode('plx-snippet', 'plx_get_snippet');
